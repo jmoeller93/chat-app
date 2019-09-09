@@ -1,12 +1,24 @@
 import React, { Component } from "react";
 import Chatkit from "@pusher/chatkit-client";
+import MessageList from "./MessageList";
+import SendMessageForm from "./SendMessageForm";
 
 class ChatScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {}
+      currentUser: {},
+      currentRoom: {},
+      messages: []
     };
+    this.sendMessage = this.sendMessage.bind(this);
+  }
+
+  sendMessage(text) {
+    this.state.currentUser.sendMessage({
+      text,
+      roomId: this.state.currentRoom.id
+    });
   }
 
   componentDidMount() {
@@ -22,7 +34,20 @@ class ChatScreen extends Component {
       .connect()
       .then(currentUser => {
         this.setState({ currentUser });
-        // console.log("currentUser", currentUser);
+        return currentUser.subscribeToRoom({
+          roomId: "c9b32e7e-55ee-4f0d-a418-9669391586c9",
+          messageLimit: 100,
+          hooks: {
+            onMessage: message => {
+              this.setState({
+                messages: [...this.state.messages, message]
+              });
+            }
+          }
+        });
+      })
+      .then(currentRoom => {
+        this.setState({ currentRoom });
       })
       .catch(error => console.error("error", error));
   }
@@ -31,6 +56,8 @@ class ChatScreen extends Component {
     return (
       <div>
         <h1>Chat</h1>
+        <MessageList messages={this.state.messages}></MessageList>
+        <SendMessageForm onSubmit={this.sendMessage} onChange />
       </div>
     );
   }
