@@ -2,7 +2,7 @@ import React from "react";
 
 class WhosOnlineList extends React.Component {
   render() {
-    if (this.props.user) {
+    if (this.props.users) {
       return (
         <ul>
           {this.props.users.map((user, index) => {
