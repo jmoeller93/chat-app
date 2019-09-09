@@ -18,22 +18,41 @@ class SendMessageForm extends Component {
 
   onChange(e) {
     this.setState({ text: e.target.value });
-    // Evertime updated... -> ChatScreen -> SendMessageForm -> OnChange
-    this.props.onChange();
+    if (this.props.onChange) {
+      this.props.onChange();
+    }
   }
 
   render() {
+    const styles = {
+      container: {
+        padding: 20,
+        borderTop: "1px #4C758F solid",
+        marginBottom: 20
+      },
+      form: {
+        display: "flex"
+      },
+      input: {
+        color: "inherit",
+        background: "none",
+        outline: "none",
+        border: "none",
+        flex: 1,
+        fontSize: 16
+      }
+    };
     return (
-      <div>
+      <div style={styles.container}>
         <div>
-          <h2>Type a message here then hit ENTER</h2>
-          <form onSubmit={this.onSubmit}>
+          <form onSubmit={this.onSubmit} style={styles.form}>
             <input
               type="text"
-              placeholder="What is your text?"
+              placeholder="Type a message here then hit ENTER"
               onChange={this.onChange}
+              value={this.state.text}
+              style={styles.input}
             />
-            <input type="submit" />
           </form>
         </div>
       </div>
