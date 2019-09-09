@@ -26,7 +26,7 @@ class SendMessageForm extends Component {
     return (
       <div>
         <div>
-          <h2>What is your username?</h2>
+          <h2>Type a message here then hit ENTER</h2>
           <form onSubmit={this.onSubmit}>
             <input
               type="text"

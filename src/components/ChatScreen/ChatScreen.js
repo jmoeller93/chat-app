@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Chatkit from "@pusher/chatkit-client";
-import MessageList from "./MessageList";
-import SendMessageForm from "./SendMessageForm";
-import TypingIndicator from "./TypingIndicator";
+import MessageList from "../MessageList";
+import SendMessageForm from "../SendMessageForm";
+import TypingIndicator from "../TypingIndicator";
+import "./styles.css";
 
 class ChatScreen extends Component {
   constructor(props) {
@@ -75,13 +76,13 @@ class ChatScreen extends Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <aside>
+      <div className="container">
+        <div className="chatContainer">
+          <aside className="whosOnlineListContainer">
             <h2>Who's online PLACEHOLDER</h2>
           </aside>
-          <section>
-            <MessageList messages={this.state.messages} />
+          <section className="chatListContainer">
+            <MessageList className="chatList" messages={this.state.messages} />
             <TypingIndicator usersWhoAreTyping={this.state.usersWhoAreTyping} />
             <SendMessageForm
               onSubmit={this.sendMessage}
