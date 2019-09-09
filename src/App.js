@@ -6,7 +6,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentUsername: ""
+      currentUsername: "",
+      currentScreen: "WhatIsYourUsernameScreen"
     };
     this.onUsernameSubmitted = this.onUsernameSubmitted.bind(this);
   }
@@ -21,14 +22,20 @@ class App extends Component {
     })
       .then(response => {
         this.setState({
-          currentUsername: username
+          currentUsername: username,
+          currentScreen: "ChatScreen"
         });
       })
       .catch(error => console.error("error", error));
   }
 
   render() {
-    return <UsernameForm onSubmit={this.onUsernameSubmitted} />;
+    if (this.state.currentScreen === "WhatIsYourUsernameScreen") {
+      return <UsernameForm onSubmit={this.onUsernameSubmitted} />;
+    }
+    if (this.state.currentScreen === "ChatScreen") {
+      return <ChatScreen currentUsername={this.state.currentUsername} />;
+    }
   }
 }
 
