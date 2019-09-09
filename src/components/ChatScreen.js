@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Chatkit from "@pusher/chatkit-client";
 import MessageList from "./MessageList";
 import SendMessageForm from "./SendMessageForm";
+import TypingIndicator from "./TypingIndicator";
 
 class ChatScreen extends Component {
   constructor(props) {
@@ -9,9 +10,17 @@ class ChatScreen extends Component {
     this.state = {
       currentUser: {},
       currentRoom: {},
-      messages: []
+      messages: [],
+      usersWhoAreTyping: []
     };
     this.sendMessage = this.sendMessage.bind(this);
+    this.sendTypingEvent = this.sendTypingEvent.bind(this);
+  }
+
+  sendTypingEvent() {
+    this.state.currentUser
+      .isTypingIn({ roomId: this.state.currentRoom.id })
+      .catch(error => console.error("error", error));
   }
 
   sendMessage(text) {
@@ -42,6 +51,18 @@ class ChatScreen extends Component {
               this.setState({
                 messages: [...this.state.messages, message]
               });
+            },
+            onUserStartedTyping: user => {
+              this.setState({
+                usersWhoAreTyping: [...this.state.usersWhoAreTyping, user.name]
+              });
+            },
+            onUserStoppedTyping: user => {
+              this.setState({
+                usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
+                  username => username !== user.name
+                )
+              });
             }
           }
         });
@@ -55,9 +76,19 @@ class ChatScreen extends Component {
   render() {
     return (
       <div>
-        <h1>Chat</h1>
-        <MessageList messages={this.state.messages}></MessageList>
-        <SendMessageForm onSubmit={this.sendMessage} onChange />
+        <div>
+          <aside>
+            <h2>Who's online PLACEHOLDER</h2>
+          </aside>
+          <section>
+            <MessageList messages={this.state.messages} />
+            <TypingIndicator usersWhoAreTyping={this.state.usersWhoAreTyping} />
+            <SendMessageForm
+              onSubmit={this.sendMessage}
+              onChange={this.sendTypingEvent}
+            />
+          </section>
+        </div>
       </div>
     );
   }

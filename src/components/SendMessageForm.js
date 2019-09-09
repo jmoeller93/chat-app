@@ -18,9 +18,7 @@ class SendMessageForm extends Component {
 
   onChange(e) {
     this.setState({ text: e.target.value });
-    if (this.props.onChange) {
-      this.props.onChange();
-    }
+    // Evertime updated... -> ChatScreen -> SendMessageForm -> OnChange
     this.props.onChange();
   }
 
