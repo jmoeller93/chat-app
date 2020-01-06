@@ -5,15 +5,6 @@ const Chatkit = require("@pusher/chatkit-server");
 
 const app = express();
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
 const chatkit = new Chatkit.default({
   instanceLocator: "v1:us1:7015ce71-fe2f-46d6-8679-05fa496b1d46",
   key:

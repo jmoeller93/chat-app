@@ -1,10 +1,10 @@
-import React, { Component } from "react";
 import Chatkit from "@pusher/chatkit-client";
+import React, { Component } from "react";
 import MessageList from "../MessageList/MessageList";
 import SendMessageForm from "../SendMessageForm/SendMessageForm";
 import TypingIndicator from "../TypingIndicator/TypingIndicator";
-import "./styles.css";
 import WhosOnlineList from "../WhosOnlineList/WhosOnlineList";
+import "./styles.css";
 
 class ChatScreen extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class ChatScreen extends Component {
       .then(currentUser => {
         this.setState({ currentUser });
         return currentUser.subscribeToRoom({
-          roomId: "5ad0635c-9679-4d26-a475-4afccb845970",
+          roomId: "b795a669-5492-4cfe-928a-c4b00d0be4f3",
           messageLimit: 100,
           hooks: {
             onMessage: message => {
@@ -53,9 +53,7 @@ class ChatScreen extends Component {
                 )
               });
             },
-            onUserCameOnline: () => this.forceUpdate(),
-            onUserWentOffline: () => this.forceUpdate(),
-            onUserJoined: () => this.forceUpdate()
+            onPresenceChange: () => this.forceUpdate()
           }
         });
       })
@@ -83,10 +81,11 @@ class ChatScreen extends Component {
       <div className="container">
         <div className="chatContainer">
           <aside className="whosOnlineListContainer">
-            <h2>Who's online PLACEHOLDER</h2>
+            <h2>Who's online</h2>
             <WhosOnlineList
+              currentUser={this.state.currentUser}
               users={this.state.currentRoom.users}
-            ></WhosOnlineList>
+            />
           </aside>
           <section className="chatListContainer">
             <MessageList messages={this.state.messages} />

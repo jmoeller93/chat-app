@@ -4,13 +4,14 @@
   "private": true,
   "dependencies": {
     "@pusher/chatkit": "^0.7.18",
-    "@pusher/chatkit-client": "^1.12.1",
-    "@pusher/chatkit-server": "^2.1.0",
+    "@pusher/chatkit-client": "^1.13.3",
+    "@pusher/chatkit-server": "^2.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "node-sass": "^4.13.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1"
+    "react-scripts": "^3.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
